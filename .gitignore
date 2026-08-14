@@ -1,0 +1,59 @@
+build/bin
+node_modules
+frontend/dist
+
+# -------------------------
+# Go
+# -------------------------
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go test / coverage
+*.test
+*.out
+coverage.out
+
+# -------------------------
+# Wails / Build
+# -------------------------
+build/bin/
+build/darwin/
+build/windows/
+
+# Se appicon.png e README.md forem arquivos que você criou,
+# eles devem continuar no Git.
+
+# -------------------------
+# Frontend
+# -------------------------
+frontend/node_modules/
+frontend/dist/
+
+# -------------------------
+# IDE / Editors
+# -------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# -------------------------
+# OS
+# -------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------
+# Environment / Secrets
+# -------------------------
+.env
+.env.*
+!.env.example
+
+# -------------------------
+# Logs
+# -------------------------
+*.log
