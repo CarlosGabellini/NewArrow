@@ -5,6 +5,6 @@ const botaoGerador = document.querySelector(".botao1")
 
 
 botaoGerador.addEventListener("click", async () => { 
-  let Number1 = await GerarNumero()
-  numerosGerados.textContent = Number1
+  let Numbers = await GerarNumero()
+  numerosGerados.textContent = Numbers.join(", ")
 })
