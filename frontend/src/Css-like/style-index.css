@@ -1,44 +1,63 @@
-@import url('https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Skranji:wght@400;700&display=swap');
+
+/*Caracteristicas e definicoes basicas do tema.*/
+
+:root {
+    --cor-de-fundo: #1d2021;
+    --cor-de-texto: #fbf1c7;
+    --cor-da-caixa-nav: #458588;
+    --transicao: all 0.3s linear;
+    --cor-transicao-forma:  rgba(69, 85, 136, 0.5);
+    --borda-circular: 8px;
+}
 
 * {
     box-sizing: border-box;
-    font-family: "Elms Sans", sans-serif;
-    font-optical-sizing: auto;
+    font-family: "Skranji", system-ui;
+    font-weight: 400;
     font-style: normal;
 }
 
-.the-begin {
-    display: flex;
-    flex-direction: column;
+body {
+    background: var(--cor-de-fundo);
+    color: var(--cor-de-texto);
 }
 
-.gerador {
-    margin: 1rem auto;
+/*Remove the links in a*/
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
-.organizacao-botoes {
-    height: 60vh;
+.img-manipulation {
+    width: 72px;
+    height: 64px;
+    margin: 0.5rem;
+    border-radius: var(--borda-circular);
+    transition: var(--transicao);
+}
+
+.img-manipulation:hover {
+    background: var(--cor-transicao-forma);
+}
+
+.navegation {
     display: flex;
-    flex-direction: column;
+    margin: 0 auto;
+    gap: clamp(1rem, 4vw, 4.5rem);          /*Boa pratica para telas grandes e pequenas.*/
     justify-content: center;
-    align-items: center;
 }
 
-.botao1 {
-    min-width: 40vw;
-    min-height: 10vh;
-    background-color: transparent;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    font-size: 2.25rem;
+.navegation-bar-h1 {
+    font-size: 1.5rem;
+    border: 2px solid var(--cor-da-caixa-nav);
+    min-width: 15rem;
+    border-radius: 4px;
+    transition: var(--transicao);
+    text-align: center;
 }
 
-.botao1:hover {
-    background-color: black;
-    color: yellow;
-}
-
-#numeros-gerados {
-    font-size: 2.5rem;
-    margin: 0.75rem;
-    
+.navegation-bar-h1:hover {
+    background-color: var(--cor-transicao-forma);
 }
