@@ -35,6 +35,7 @@ a {
     height: 64px;
     margin: 0.5rem;
     border-radius: var(--borda-circular);
+    border: 2px solid var(--cor-da-caixa-nav);
     transition: var(--transicao);
 }
 
@@ -45,19 +46,43 @@ a {
 .navegation {
     display: flex;
     margin: 0 auto;
-    gap: clamp(1rem, 4vw, 4.5rem);          /*Boa pratica para telas grandes e pequenas.*/
-    justify-content: center;
+    gap: clamp(1rem, 1vw, 2.5rem);          /*Boa pratica para telas grandes e pequenas.*/
+    border-radius: var(--borda-circular);
+    border: 2px solid var(--cor-da-caixa-nav);
 }
 
 .navegation-bar-h1 {
     font-size: 1.5rem;
+    margin-left: 1rem;
+    padding-top: 0.5rem;
     border: 2px solid var(--cor-da-caixa-nav);
-    min-width: 15rem;
+    min-width: 12rem;
     border-radius: var(--borda-circular);
     transition: var(--transicao);
     text-align: center;
+    max-height: 7vh;
 }
 
 .navegation-bar-h1:hover {
     background-color: var(--cor-transicao-forma);
+}
+
+.app-layout {
+    display: grid;
+    height: 80vh;
+    border: 1px solid var(--cor-da-caixa-nav);
+}
+
+.music-painel {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    border: 1px solid var(--cor-da-caixa-nav);
+    border-radius: var(--borda-circular);
+    width: 60vw;
+}
+
+#lista-de-musicas {
+    padding-top: 0.5rem;
+    padding-left: 1rem;
+    font-size: 1.25rem;
 }
