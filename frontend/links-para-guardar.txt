@@ -2,3 +2,6 @@ Topico dos icones
 
 (Pasta)
 https://icons8.com.br/icons/set/pastas--style-plasticine
+
+(Site para definicao de cores)
+https://lospec.com/palette-list/gruvbox-dark
