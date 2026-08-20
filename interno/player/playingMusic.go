@@ -30,7 +30,20 @@ func CarregarMusica(caminho string) (P PlayingMusic) {
 	return P
 }
 
-func (P PlayingMusic) IniciarSpeaker() error {
+func (P *PlayingMusic) IniciarSpeaker() error {
 	speaker.Init(P.formato.SampleRate, P.formato.SampleRate.N(time.Second / 20))
 	return nil
+}
+
+func (P *PlayingMusic) TocandoMusica() *beep.Ctrl {
+	P.Controle = &beep.Ctrl{Streamer: beep.Loop(2, P.stremando), Paused: false}
+	speaker.Play(P.Controle)
+
+	return P.Controle
+}
+
+func (P *PlayingMusic) AlternarPausa() {
+	speaker.Lock()
+	P.Controle.Paused = !P.Controle.Paused
+	speaker.Unlock()
 }
