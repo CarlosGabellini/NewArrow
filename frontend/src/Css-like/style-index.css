@@ -69,6 +69,7 @@ a {
 
 .app-layout {
     display: grid;
+    grid-template-columns: 1fr 1fr;
     height: 80vh;
     border: 1px solid var(--cor-da-caixa-nav);
 }
@@ -79,10 +80,34 @@ a {
     border: 1px solid var(--cor-da-caixa-nav);
     border-radius: var(--borda-circular);
     width: 60vw;
+    display: flex;
+    gap: 2rem;
 }
 
-#lista-de-musicas {
+#lista {
     padding-top: 0.5rem;
     padding-left: 1rem;
     font-size: 1.55rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#artista {
+    padding-top: 0.5rem;
+    padding-left: 1rem;
+    font-size: 1.55rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#minutagem {
+    padding-top: 0.5rem;
+    padding-left: 1.25rem;
+    font-size: 1.55rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.album {
+    border: 1px solid var(--cor-da-caixa-nav);
 }

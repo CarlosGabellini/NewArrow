@@ -4,7 +4,7 @@ var PlayerMusic PlayingMusic
 
 func ToqueMusica() error {
 
-	PlayerMusic = CarregarMusica("interno/diretorioMusicas/Tu Pai.mp3")
+	PlayerMusic = CarregarMusica("interno/diretorioMusicas/Pendulum - Granite (Official Video).mp3")
 
 	if PlayerMusic.Erro != nil {
 		return PlayerMusic.Erro
