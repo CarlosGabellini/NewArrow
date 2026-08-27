@@ -11,13 +11,17 @@ let informationConsole = true;
 
 async function tocarMusic() {
   
-  try {  
+  try { 
+
+    //Se a musica nao esta tocando, entao nao existe a opcao de pausar a musica;
+  
     if (estaTocando) {
       await TogglePause();
 
       if (informationConsole) {
         console.log('Pausado!');
         informationConsole = false;
+        
       } else {
         console.log("despausado!");
         informationConsole = true;
@@ -25,6 +29,8 @@ async function tocarMusic() {
       
       estaTocando = true;
     }
+
+    //Aqui comeca a tocar a musica e fazer a comunicacao com o go;
 
     else {
       await PlayTrack();
