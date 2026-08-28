@@ -3,8 +3,8 @@
 /*Caracteristicas e definicoes basicas do tema.*/
 
 :root {
-    --cor-de-fundo: #1d2021;
-    --cor-de-texto: #fbf1c7;
+    --cor-de-fundo: #3c3836;
+    --cor-de-texto: #8ec07c;
     --cor-da-caixa-nav: #458588;
     --transicao: all 0.3s linear;
     --cor-transicao-forma:  rgba(69, 85, 136, 0.5);
@@ -45,21 +45,22 @@ a {
 
 .navegation {
     display: flex;
-    margin: 0 auto;
-    gap: clamp(1rem, 1vw, 2.5rem);          /*Boa pratica para telas grandes e pequenas.*/
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-left: 1rem;
     border-radius: var(--borda-circular);
     border: 2px solid var(--cor-da-caixa-nav);
+    gap: 1rem;
 }
 
 .navegation-bar-h1 {
     font-size: 1.5rem;
-    margin-left: 1rem;
-    padding-top: 0.5rem;
     border: 2px solid var(--cor-da-caixa-nav);
-    min-width: 12rem;
+    min-width: 15%;
     border-radius: var(--borda-circular);
     transition: var(--transicao);
     text-align: center;
+    align-items: center;
     max-height: 7vh;
 }
 
@@ -75,39 +76,7 @@ a {
 }
 
 .music-painel {
-    margin-top: 1rem;
-    margin-left: 1rem;
     border: 1px solid var(--cor-da-caixa-nav);
     border-radius: var(--borda-circular);
     width: 60vw;
-    display: flex;
-    gap: 2rem;
-}
-
-#lista {
-    padding-top: 0.5rem;
-    padding-left: 1rem;
-    font-size: 1.55rem;
-    display: flex;
-    flex-direction: column;
-}
-
-#artista {
-    padding-top: 0.5rem;
-    padding-left: 1rem;
-    font-size: 1.55rem;
-    display: flex;
-    flex-direction: column;
-}
-
-#minutagem {
-    padding-top: 0.5rem;
-    padding-left: 1.25rem;
-    font-size: 1.55rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.album {
-    border: 1px solid var(--cor-da-caixa-nav);
 }
