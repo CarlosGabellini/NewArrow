@@ -1,6 +1,7 @@
 package dir1org
 
 import (
+	"encoding/json"
 	"os"
 	"path/filepath"
 	"strings"
@@ -14,11 +15,36 @@ const (
 	WorkersOnline = int(8)
 )
 
-func Liste_a_pasta(diretorio string) ([]ListeMusicas, error) {
+func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 
+	//Validacao do JSON para ver se ele nao esta corrompido;
+	var _lista_de_musicas []ListaMusicas
+	chave_validacao := make(map[string]ListaMusicas)
+	caminhos_vistos := make(map[string]bool)		//Levando em consideracao musicas apagadas;
+
+	f, err := os.Open("NewArrow/yourJSON.json")
+
+	if err != nil {
+		return _lista_de_musicas, err
+	}
+
+	defer f.Close()
+
+	if err := json.NewDecoder(f).Decode(&chave_validacao); err != nil {
+		return _lista_de_musicas, err
+		//Se o JSON estiver corrompido, vai retornar uma struct vazia e a funcao ja vai parar aqui;
+	}
+
+	//Se o JSON eh nil, o chave validacao vai interromper o fluxo e cagar o programa;
+	
+	if chave_validacao == nil {
+    	chave_validacao = make(map[string]ListaMusicas)
+	}
+	
+	//Caso o nosso diretorio nao tenha sido escaneado, vamos seguir o caminho de sempre;
+	
 	_caminho := make(chan string, tarefas)				//Canal com 10 buffers;
-	_saida_pasta := make(chan ListeMusicas, tarefas)	//10 buffers da struct que eu coloquei;
-	var _lista_de_musicas []ListeMusicas
+	_saida_pasta := make(chan ListaMusicas, tarefas)	//10 buffers da struct que eu coloquei;
 	var _waitG sync.WaitGroup
 
 	for i := 0; i < WorkersOnline; i++ {
@@ -39,13 +65,31 @@ func Liste_a_pasta(diretorio string) ([]ListeMusicas, error) {
 		// que ele comeca a nossa outra funcao processarArquivo ja vai comecar a escanear a musica tambem a 
 		// partir do mesmo canal.
 		filepath.WalkDir(diretorio, func(path string, d os.DirEntry, err error) error {
-
+			
 			if err != nil {
 				return err
 			}
 
 			if !d.IsDir() && strings.ToLower(filepath.Ext(path)) == ".mp3" {
-				_caminho <- path		//Canal que a gente vai colocar o nosso codigo;
+				informacao, err := d.Info()
+				entrada, se_existe := chave_validacao[path]
+	
+				if err != nil {
+					return err
+				}
+
+				/*Fazendo a comparacao com o map aqui para nao ter que ficar sobreescrevendo o JSON toda
+				 santa vez, utilizamos 2 maps para que nao prescise ficar escaneando.
+				 */
+	
+				if se_existe && entrada.ModTime == informacao.ModTime().Unix() && entrada.Size == informacao.Size() {
+					_lista_de_musicas = append(_lista_de_musicas, entrada)
+					caminhos_vistos[path] = true
+
+				} else {
+					_caminho <- path
+					caminhos_vistos[path] = true
+				}
 			}
 
 			return nil
@@ -63,10 +107,32 @@ func Liste_a_pasta(diretorio string) ([]ListeMusicas, error) {
 		_lista_de_musicas = append(_lista_de_musicas, musicas)
 	}
 
+	for path := range chave_validacao {
+		if !caminhos_vistos[path] {
+			delete(chave_validacao, path)
+		}
+	}
+
+	for _, musica := range _lista_de_musicas {
+		chave_validacao[musica.Caminho_path] = musica
+	}
+
+	saida, err := os.Create("NewArrow/yourJSON.json")
+	
+	if err != nil {
+    	return _lista_de_musicas, err
+	}
+
+	defer saida.Close()
+
+	if err := json.NewEncoder(saida).Encode(chave_validacao); err != nil {
+    	return _lista_de_musicas, err
+	}
+
 	return _lista_de_musicas, nil
 }
 
-func processarArquivo(wayPath <-chan string, saidas chan <- ListeMusicas, wg *sync.WaitGroup) {
+func processarArquivo(wayPath <-chan string, saidas chan <- ListaMusicas, wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	for path := range wayPath {
@@ -80,10 +146,18 @@ func processarArquivo(wayPath <-chan string, saidas chan <- ListeMusicas, wg *sy
 	}
 }
 
-func ColocarMetadados(WayPath string) (ListeMusicas, error) {
+func ColocarMetadados(WayPath string) (ListaMusicas, error) {
 
 	f, err := os.Open(WayPath)
-	var _saidasMetadados ListeMusicas
+	
+	var _saidasMetadados ListaMusicas
+
+	
+	if err != nil {
+		return _saidasMetadados, nil
+	}
+	
+	informacoes, err := f.Stat()
 
 	if err != nil {
 		return _saidasMetadados, err
@@ -94,13 +168,16 @@ func ColocarMetadados(WayPath string) (ListeMusicas, error) {
 	m, err := tag.ReadFrom(f);
 
 	if err != nil {
-		return ListeMusicas{}, err
+		return ListaMusicas{}, err
 	}
 
 	_saidasMetadados.Ano = m.Year()
 	_saidasMetadados.Artista = m.Artist()
 	_saidasMetadados.Nome_album = m.Album()
 	_saidasMetadados.Nome_da_musica = m.Title()
+	_saidasMetadados.Caminho_path = WayPath;
+	_saidasMetadados.ModTime = informacoes.ModTime().Unix()
+	_saidasMetadados.Size = informacoes.Size()
 
 	return _saidasMetadados, nil
 }
