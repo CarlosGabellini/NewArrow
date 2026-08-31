@@ -3,9 +3,9 @@
 /*Caracteristicas e definicoes basicas do tema.*/
 
 :root {
-    --cor-de-fundo: #3c3836;
-    --cor-de-texto: #8ec07c;
-    --cor-da-caixa-nav: #458588;
+    --cor-de-fundo: #282828;
+    --cor-de-texto:  #fbf1c7;
+    --cor-da-caixa-nav: #8ec07c;
     --transicao: all 0.3s linear;
     --cor-transicao-forma:  rgba(69, 85, 136, 0.5);
     --borda-circular: 16px;

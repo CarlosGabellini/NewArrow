@@ -3,6 +3,7 @@ module NewArrow
 go 1.25.0
 
 require (
+	github.com/dhowden/tag v0.0.0-20240417053706-3d75831295e8
 	github.com/gopxl/beep/v2 v2.1.1
 	github.com/wailsapp/wails/v2 v2.14.0
 )
