@@ -15,6 +15,30 @@ const (
 	WorkersOnline = int(8)
 )
 
+/*-----------------------------------Biblioteca de escaneamento de diretorio------------------------------//
+
+	Basicamente essa biblioteca aqui serve para criar funcoes para escanear em um JSON e ser consumida pelo
+	JavaScript depois, a arquitetura foi desenhada para que o cache e o arquivo nao prescise ficar sendo sobrees-
+	-crito toda vez que rodar o aplicativo em busca da biblioteca.
+	As pastas de musicas principal deve ficar em Os.HomeDir() onde fica a pasta "Music", assim lemos aquela 
+	pasta onde vai ficar as playlists do proprio usuario.
+
+	A funcao Liste_a_pasta:
+
+	Ela eh o coracao, deve retornar um array de lista de musicas ja encaminhados para o JSON, onde o JSON vai
+	ser lido pelo JavaScript e entao vai tocar a musica pela outra biblioteca que ja temos.
+	Utilizamos 2 canais de buffer para fazer o processamento, alem de uma funcao anomima que vai escanear o 
+	diretorio da HOME. Relembrando que utilizamos goroutines aqui para processamento paralelo. (Fica melhor para
+	nao sobrecarregar responsabilidades).
+
+	A funcao processarArquivo:
+	Basicamente somente faz um for simples dos 10 buffers que temos para escanear os metadados na outra funcao, 
+	esse metadados escaneia os nossos arquivos .mp3 (A leitura somente acontece para o .mp3), e volta em um array
+	para a funcao principal a partir do buffer que criamos que se chama _saida_pasta.
+	
+	_____________________________________________________________________________________________________________
+ */
+
 func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 
 	//Validacao do JSON para ver se ele nao esta corrompido;
@@ -98,6 +122,8 @@ func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 		close(_caminho)			//fechando o canal para parar de receber dados;
 	}()
 
+	//Fechando o outro canal antes da funcao terminar;
+
 	go func() {
 		_waitG.Wait()
 		close(_saida_pasta)
@@ -112,6 +138,8 @@ func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 			delete(chave_validacao, path)
 		}
 	}
+
+	//Tem alguma nocao do que realmente seria isso?
 
 	for _, musica := range _lista_de_musicas {
 		chave_validacao[musica.Caminho_path] = musica
@@ -136,7 +164,7 @@ func processarArquivo(wayPath <-chan string, saidas chan <- ListaMusicas, wg *sy
 	defer wg.Done()
 
 	for path := range wayPath {
-		meta, err := ColocarMetadados(path)
+		meta, err := ColocarMetadados(path)	  //O buffer consegue ver sempre 10 posicoes para escanear a musica;
 
 		if err != nil {
 			continue			//Caso isso possa dar um erro;
@@ -145,6 +173,15 @@ func processarArquivo(wayPath <-chan string, saidas chan <- ListaMusicas, wg *sy
 		saidas <- meta
 	}
 }
+
+/*------------------------------------A funcao ColocarMetadados----------------------------------------------//
+
+	Basicamente importamos uma biblioteca que se chama dhowgen/tag, que le o nosso arquivo para nos sobre qual
+	eh o artista, o ano, etc. Colocamos essas informacoes para o player ficar mais completo e utilizar elas depois
+	no frontEnd.
+
+_____________________________________________________________________________________________________________
+ */
 
 func ColocarMetadados(WayPath string) (ListaMusicas, error) {
 
