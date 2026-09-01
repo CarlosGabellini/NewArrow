@@ -1,49 +1,11 @@
-import { PlayTrack } from '../../wailsjs/go/main/App.js';
-import { TogglePause } from '../../wailsjs/go/main/App.js';
+//Aqui vamos comecar a listar as musicas e colocar elas no html;
 
-//Os imports devem ter EXATAMENTE o nome da funcao exata (Eh case sensitive); e tambem colocar
-//o caminho exato, na hora de gerar o binario tambem vou ter que dar uma olhada sobre como isso
-//funciona para distribuicao;
+import { RetornandoLista } from '../../wailsjs/go/main/App.js';
 
-const tocarMusica = document.getElementById("btn-player");
-let estaTocando = false;
-let informationConsole = true;
+//Atribuindo a uma variavel o array de objetos que fiz;
 
-async function tocarMusic() {
-  
-  try { 
+const _lista_de_musicas = await RetornandoLista();
 
-    //Se a musica nao esta tocando, entao nao existe a opcao de pausar a musica;
-  
-    if (estaTocando) {
-      await TogglePause();
+let nome_music = document.querySelector(".nome-musica");
 
-      if (informationConsole) {
-        console.log('Pausado!');
-        informationConsole = false;
-        
-      } else {
-        console.log("despausado!");
-        informationConsole = true;
-      }
-      
-      estaTocando = true;
-    }
-
-    //Aqui comeca a tocar a musica e fazer a comunicacao com o go;
-
-    else {
-      await PlayTrack();
-      console.log("musica tocando agora!");
-      estaTocando = true;
-    }
-  }
- 
-  catch (error) {
-    console.log("erro: " + error);
-  }
-}
-
-tocarMusica.addEventListener("click", tocarMusic);
-
-//Este eh um exemplo de como a funcao no JS deve funcionar, sempre acompanhada do Async e await;
+nome_music.textContent = _lista_de_musicas[0].nome_musica;

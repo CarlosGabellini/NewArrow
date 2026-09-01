@@ -30,8 +30,7 @@ func (a *App) TogglePause() {
 //o JavaScript.
 
 func (a *App) RetornandoLista() ([]dir1org.ListaMusicas, error) {
-	var CaminhoJSON string = "NewArrow/yourJSON.json"
-
+	var CaminhoJSON string = "./myJSONfile.json"
 	lista, err := dir1org.EscanearJSON(CaminhoJSON)
 
 	if err != nil {

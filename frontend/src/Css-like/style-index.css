@@ -80,3 +80,17 @@ a {
     border-radius: var(--borda-circular);
     width: 60vw;
 }
+
+.faixa-de-musica {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.faixa-de-musica:hover {
+    background-color: var(--cor-de-texto);
+    color: var(--cor-da-caixa-nav);
+    transition: var(--transicao);
+}

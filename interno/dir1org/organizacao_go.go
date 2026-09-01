@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"sync"
 
@@ -70,7 +71,13 @@ func EscanearJSON(arquivo string) ([]ListaMusicas, error) {
 		_lista_de_musicas = append(_lista_de_musicas, v)
 	}
 
-	return _lista_de_musicas, nil
+	//Prescisa do sort nessa linha por que sem isso no JS a musica vai ficar sendo alterada toda hora;
+	
+	sort.Slice(_lista_de_musicas, func(i, j int) bool {
+		return _lista_de_musicas[i].Caminho_path < _lista_de_musicas[j].Caminho_path
+	})
+
+	return  _lista_de_musicas, nil
 }
 
 func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
