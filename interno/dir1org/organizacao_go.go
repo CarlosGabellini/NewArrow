@@ -51,13 +51,15 @@ func EscanearJSON(arquivo string) ([]ListaMusicas, error) {
 
 	chave_validacao := make(map[string]ListaMusicas)
 
-	/*Basicamente o make(map[string]ListaMusicas) cria um caminho para armazenar cada struct 
+	/*
+		Basicamente o make(map[string]ListaMusicas) cria um caminho para armazenar cada struct 
 	que a gente fez no nosso JSON, pense no map[string] como map"C://users/felip/Musics", assim
 	a gente pega o caminho do arquivo, coloca em um map e guarda numa lista.
-	Depois que a gente guarda nessa lista, somente prescisa fazer um for simples onde atribuimos
+		Depois que a gente guarda nessa lista, somente prescisa fazer um for simples onde atribuimos
 	ao nosso array de struct para devolver ao JavaScript depois, mas por que fazer isso? Simplesmente
 	para nao ter que ficar atualizando o cache toda hora nos nossos arquivos e nem ter que ficar
 	reecrevendo o disco, eh mais rapido para abrir a aplicacao.
+	
 	 */
 
 	if err := json.NewDecoder(f).Decode(&chave_validacao); err != nil {
@@ -78,7 +80,7 @@ func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 	chave_validacao := make(map[string]ListaMusicas)
 	caminhos_vistos := make(map[string]bool)		//Levando em consideracao musicas apagadas;
 
-	if f, err := os.Open("./myJSONfile.json"); err == nil {
+	if f, err := os.Open("NewArrow/myJSONfile.json"); err == nil {
     	json.NewDecoder(f).Decode(&chave_validacao)
      	f.Close()
 	}

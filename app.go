@@ -4,6 +4,7 @@ import (
 	"NewArrow/interno/dir1org"
 	play "NewArrow/interno/player"
 	"context"
+	"fmt"
 )
 
 // App struct
@@ -24,16 +25,52 @@ func (a *App) TogglePause() {
 	play.PararMusica()
 }
 
-func (a *App) Creates_list() ([]dir1org.ListaMusicas, error) {
-	DiretorioMusica, err := dir1org.Pasta_de_musica()
+
+//Funcao importante que vai escanear o JSON e retornar a lista de musicas diretamente para
+//o JavaScript.
+
+func (a *App) RetornandoLista() ([]dir1org.ListaMusicas, error) {
+	var CaminhoJSON string = "NewArrow/yourJSON.json"
+
+	lista, err := dir1org.EscanearJSON(CaminhoJSON)
+
 	if err != nil {
 		return nil, err
 	}
 
-	lista, err := dir1org.Liste_a_pasta(DiretorioMusica)
+	return lista, nil
+}
+
+func (a *App) AtualizarCache() (string, error) {
+	diretorioHome, err := dir1org.EncontreHome()
+
 	if err != nil {
-		return lista, err
+		return "", err
 	}
 
-	return lista, nil
+	lista2, err := dir1org.Liste_a_pasta(diretorioHome)
+	if err != nil {
+		return "", err
+	}
+
+	var sucessoMensagem string = fmt.Sprintf("O arquivo foi um sucesso! primeira musica %s", 
+		lista2[0].Nome_da_musica)
+
+	return sucessoMensagem, nil
+}
+
+func (a *App) ListarDiretorios() ([]string, error) {
+	caminhoHOME, err := dir1org.EncontreHome()
+
+	if err != nil {
+		return nil, err
+	}
+	
+	diretoriosEncontrados, err := dir1org.VerOsdiretorios_musics(caminhoHOME)
+
+	if err != nil {
+		return nil, err
+	}
+	
+	return diretoriosEncontrados, err
 }

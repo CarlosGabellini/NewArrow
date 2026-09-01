@@ -15,7 +15,7 @@ type ListaMusicas struct {
 	Size int64 `json:"Size"`
 }
 
-func Pasta_de_musica() (string, error) {
+func EncontreHome() (string, error) {
 	diretorioHome, err := os.UserHomeDir()
 
 	if err != nil {
@@ -23,4 +23,29 @@ func Pasta_de_musica() (string, error) {
 	}
 	
 	return filepath.Join(diretorioHome, "Music"), nil
+}
+
+/*-----------------------------------------Sobre VerOSdiretorios_musics-----------------------------------
+	Basicamente essa funcao vai me ajudar a colocar os nomes no frontEnd de maneira correta, antes de realmente
+	abrir os diretorios e ver as musicas no FrontEnd, serve basicamente para me ajudar a listar de forma correta
+	sem depender da funcao principal.
+
+	------------------------------------------------------------------------------------------------------
+ */
+
+func VerOsdiretorios_musics(home string) ([]string, error) {
+	diretorios, err := os.ReadDir(home)
+	if err != nil {
+		return nil, err
+	}
+
+	var diretoriosMusicas []string
+
+	for _, diretorio := range diretorios {
+		if diretorio.IsDir() {
+			diretoriosMusicas = append(diretoriosMusicas, diretorio.Name())
+		}
+	}
+
+	return diretoriosMusicas, nil
 }
