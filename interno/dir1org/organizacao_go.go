@@ -39,6 +39,38 @@ const (
 	_____________________________________________________________________________________________________________
  */
 
+func EscanearJSON(arquivo string) ([]ListaMusicas, error) {
+	//Aqui vou escanear o JSON.
+	var _lista_de_musicas []ListaMusicas
+
+	f, err := os.Open(arquivo)
+	if err != nil {
+		return _lista_de_musicas, err
+	}
+	defer f.Close()
+
+	chave_validacao := make(map[string]ListaMusicas)
+
+	/*Basicamente o make(map[string]ListaMusicas) cria um caminho para armazenar cada struct 
+	que a gente fez no nosso JSON, pense no map[string] como map"C://users/felip/Musics", assim
+	a gente pega o caminho do arquivo, coloca em um map e guarda numa lista.
+	Depois que a gente guarda nessa lista, somente prescisa fazer um for simples onde atribuimos
+	ao nosso array de struct para devolver ao JavaScript depois, mas por que fazer isso? Simplesmente
+	para nao ter que ficar atualizando o cache toda hora nos nossos arquivos e nem ter que ficar
+	reecrevendo o disco, eh mais rapido para abrir a aplicacao.
+	 */
+
+	if err := json.NewDecoder(f).Decode(&chave_validacao); err != nil {
+		return _lista_de_musicas, err
+	}
+
+	for _, v := range chave_validacao {
+		_lista_de_musicas = append(_lista_de_musicas, v)
+	}
+
+	return _lista_de_musicas, nil
+}
+
 func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 
 	//Validacao do JSON para ver se ele nao esta corrompido;
@@ -46,17 +78,9 @@ func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 	chave_validacao := make(map[string]ListaMusicas)
 	caminhos_vistos := make(map[string]bool)		//Levando em consideracao musicas apagadas;
 
-	f, err := os.Open("NewArrow/yourJSON.json")
-
-	if err != nil {
-		return _lista_de_musicas, err
-	}
-
-	defer f.Close()
-
-	if err := json.NewDecoder(f).Decode(&chave_validacao); err != nil {
-		return _lista_de_musicas, err
-		//Se o JSON estiver corrompido, vai retornar uma struct vazia e a funcao ja vai parar aqui;
+	if f, err := os.Open("./myJSONfile.json"); err == nil {
+    	json.NewDecoder(f).Decode(&chave_validacao)
+     	f.Close()
 	}
 
 	//Se o JSON eh nil, o chave validacao vai interromper o fluxo e cagar o programa;
@@ -107,7 +131,7 @@ func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 				 */
 	
 				if se_existe && entrada.ModTime == informacao.ModTime().Unix() && entrada.Size == informacao.Size() {
-					_lista_de_musicas = append(_lista_de_musicas, entrada)
+					_saida_pasta <- entrada
 					caminhos_vistos[path] = true
 
 				} else {
@@ -121,8 +145,6 @@ func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 
 		close(_caminho)			//fechando o canal para parar de receber dados;
 	}()
-
-	//Fechando o outro canal antes da funcao terminar;
 
 	go func() {
 		_waitG.Wait()
@@ -139,13 +161,11 @@ func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 		}
 	}
 
-	//Tem alguma nocao do que realmente seria isso?
-
 	for _, musica := range _lista_de_musicas {
 		chave_validacao[musica.Caminho_path] = musica
 	}
 
-	saida, err := os.Create("NewArrow/yourJSON.json")
+	saida, err := os.Create("./myJSONfile.json")
 	
 	if err != nil {
     	return _lista_de_musicas, err
@@ -164,7 +184,7 @@ func processarArquivo(wayPath <-chan string, saidas chan <- ListaMusicas, wg *sy
 	defer wg.Done()
 
 	for path := range wayPath {
-		meta, err := ColocarMetadados(path)	  //O buffer consegue ver sempre 10 posicoes para escanear a musica;
+		meta, err := ColocarMetadados(path)
 
 		if err != nil {
 			continue			//Caso isso possa dar um erro;
@@ -191,7 +211,7 @@ func ColocarMetadados(WayPath string) (ListaMusicas, error) {
 
 	
 	if err != nil {
-		return _saidasMetadados, nil
+		return _saidasMetadados, err
 	}
 	
 	informacoes, err := f.Stat()
