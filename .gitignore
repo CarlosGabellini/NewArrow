@@ -63,3 +63,6 @@ Thumbs.db
 # nao prescisam ir para o Git
 **/myJSONfile.json
 # -------------------------
+# git rm --cached myJSONfile.json
+# Um exemplo caso queira comecar
+# a esconder uma pasta.

@@ -10,8 +10,8 @@ export function ListarDiretorios() {
   return window['go']['main']['App']['ListarDiretorios']();
 }
 
-export function PlayTrack() {
-  return window['go']['main']['App']['PlayTrack']();
+export function PlayTrack(arg1) {
+  return window['go']['main']['App']['PlayTrack'](arg1);
 }
 
 export function RetornandoLista() {

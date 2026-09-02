@@ -79,14 +79,20 @@ a {
     border: 1px solid var(--cor-da-caixa-nav);
     border-radius: var(--borda-circular);
     width: 60vw;
+    overflow-y: auto;           /*Faz com que os elementos criados fiquem dentro deste container*/
+}
+
+.music-painel::-webkit-scrollbar {
+    display: none; /*Esconde a barra de rolagem*/
 }
 
 .faixa-de-musica {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     margin-top: 0.5rem;
     font-size: 1.25rem;
+    padding-right: 1.5rem;
 }
 
 .faixa-de-musica:hover {

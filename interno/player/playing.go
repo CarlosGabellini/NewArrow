@@ -2,9 +2,9 @@ package player
 
 var PlayerMusic PlayingMusic
 
-func ToqueMusica() error {
+func ToqueMusica(pathWay string) error {
 
-	PlayerMusic = CarregarMusica("interno/diretorioMusicas/Pendulum - Granite (Official Video).mp3")
+	PlayerMusic = CarregarMusica(pathWay)
 
 	if PlayerMusic.Erro != nil {
 		return PlayerMusic.Erro

@@ -17,8 +17,8 @@ func NewApp() *App {
 	return &App{}
 }
 
-func (a *App) PlayTrack() error {
-	return play.ToqueMusica()
+func (a *App) PlayTrack(pathWay string) error {
+	return play.ToqueMusica(pathWay)
 }
 
 func (a *App) TogglePause() {
