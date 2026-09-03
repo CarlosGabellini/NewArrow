@@ -5,11 +5,14 @@
 import { RetornandoLista } from '../../wailsjs/go/main/App.js';
 import { PlayTrack } from '../../wailsjs/go/main/App.js';
 
+let estaTocando = false;
+let informacao_console = true;
+
 async function TocarTrack(caminho) {
   try {
-    await PlayTrack(caminho);
+    PlayTrack(caminho)
   } catch (error) {
-    console.log("error: ", error)
+    console.log(`error: ${error}`);
   }
 }
 
@@ -51,5 +54,5 @@ music_painel.addEventListener("click", (event) => {
   let numero_da_musica = elemento.dataset.index;
   parseInt(numero_da_musica);
 
-  TocarTrack(_lista_de_musicas[numero_da_musica].caminho_path)
+  TocarTrack(_lista_de_musicas[numero_da_musica].caminho_path);
 });

@@ -4,6 +4,11 @@ var PlayerMusic PlayingMusic
 
 func ToqueMusica(pathWay string) error {
 
+	if PlayerMusic.stremando != nil {
+		PlayerMusic.Controle.Paused = true
+		PlayerMusic.stremando.Close()
+	}
+	
 	PlayerMusic = CarregarMusica(pathWay)
 
 	if PlayerMusic.Erro != nil {
