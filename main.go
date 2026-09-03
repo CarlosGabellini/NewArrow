@@ -23,6 +23,7 @@ func main() {
 		Height: 414,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
+			Handler: NewMusicAssetHandler(),
 		},
 		Bind: []interface{}{
 			NewArrow,

@@ -6,8 +6,4 @@ export function AtualizarCache():Promise<string>;
 
 export function ListarDiretorios():Promise<Array<string>>;
 
-export function PlayTrack(arg1:string):Promise<void>;
-
 export function RetornandoLista():Promise<Array<dir1org.ListaMusicas>>;
-
-export function TogglePause():Promise<void>;

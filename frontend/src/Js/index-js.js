@@ -3,20 +3,10 @@
 /*Importando as listas e colocar ela em um valor constante para tocar ela depois.*/
 
 import { RetornandoLista } from '../../wailsjs/go/main/App.js';
-import { PlayTrack } from '../../wailsjs/go/main/App.js';
-
-let estaTocando = false;
-let informacao_console = true;
-
-async function TocarTrack(caminho) {
-  try {
-    PlayTrack(caminho)
-  } catch (error) {
-    console.log(`error: ${error}`);
-  }
-}
+import { Player } from './web-audio.js';
 
 //Atribuindo a uma variavel o array de objetos que fiz;
+const _meu_player_music = new Player;
 
 const _lista_de_musicas = await RetornandoLista();
 const music_painel = document.querySelector(".music-painel");
@@ -51,8 +41,8 @@ music_painel.addEventListener("click", (event) => {
   let elemento = event.target.closest(".faixa-de-musica");
   if (!elemento) return;
   
-  let numero_da_musica = elemento.dataset.index;
-  parseInt(numero_da_musica);
+  let numero_da_musica = parseInt(elemento.dataset.index);
 
-  TocarTrack(_lista_de_musicas[numero_da_musica].caminho_path);
+  _meu_player_music.load(`/music/${encodeURIComponent(_lista_de_musicas[numero_da_musica].caminho_path)}`);
+  _meu_player_music.play()
 });
