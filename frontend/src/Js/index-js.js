@@ -5,12 +5,17 @@
 import { RetornandoLista } from '../../wailsjs/go/main/App.js';
 import { Player } from './web-audio.js';
 
-//Atribuindo a uma variavel o array de objetos que fiz;
+//Atribuindo a uma variavel uma classe para objetos, este eh a classe do meu player de musica que eu 
+// fiz no JS, ela eh responsavel por tocar as musicas.
 const _meu_player_music = new Player;
 
+//Retornando a lista de musica que o go fez;
 const _lista_de_musicas = await RetornandoLista();
+
+//Os query Selector ficam nessa parte aqui!
 const music_painel = document.querySelector(".music-painel");
 
+//A lista do for implementa a lista de musica que o go fez em um loop e adiciona ao html.
 
 for (let i = 0; i < _lista_de_musicas.length; i++) {
   let faixa_de_musica = document.createElement("div");

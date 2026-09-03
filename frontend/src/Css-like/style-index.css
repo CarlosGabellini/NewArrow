@@ -70,15 +70,16 @@ a {
 
 .app-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: 80vh;
+    grid-template-columns: 3fr 2fr;
+    height: 85vh;
     border: 1px solid var(--cor-da-caixa-nav);
+    margin-top: 1rem;
+    border-radius: var(--borda-circular);
 }
 
 .music-painel {
     border: 1px solid var(--cor-da-caixa-nav);
     border-radius: var(--borda-circular);
-    width: 60vw;
     overflow-y: auto;           /*Faz com que os elementos criados fiquem dentro deste container*/
 }
 
@@ -100,4 +101,11 @@ a {
     background-color: var(--cor-de-texto);
     color: var(--cor-da-caixa-nav);
     transition: var(--transicao);
+}
+
+.album {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 4rem;
 }
