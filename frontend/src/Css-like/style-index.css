@@ -6,6 +6,7 @@
     --cor-de-fundo: #282828;
     --cor-de-texto:  #fbf1c7;
     --cor-da-caixa-nav: #8ec07c;
+    --cor-do-progresso: #fe8019;
     --transicao: all 0.3s linear;
     --cor-transicao-forma:  rgba(69, 85, 136, 0.5);
     --borda-circular: 16px;
@@ -104,8 +105,39 @@ a {
 }
 
 .album {
+    margin-top: 1rem;
+}
+
+.organization-album {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 4rem;
+    justify-content: center;
+}
+
+.foto-album {
+    background-color: white;
+}
+
+.informacoes-musica {
+    display: flex;
+    margin: 1rem auto;
+    flex-direction: row;
+    height: 10%;
+    max-width: 80%;
+}
+
+.barra-progresso {
+    width: 100%;
+    height: 20%;
+    border: 1px solid var(--cor-da-caixa-nav);
+    border-radius: 2px;
+    position: relative;
+}
+
+/*Queimei uns neuronios tentando fazer essa barra de progresso, espero que agora va!*/
+
+.barra-progresso-preenchida {
+    height: 100%;
+    width: 0%;
+    background-color: var(--cor-do-progresso);
+    position: absolute;
 }
