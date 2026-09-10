@@ -13,18 +13,13 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-top">
-        <h1 class="logo">⊙ NewArrow</h1>
-        <span class="version">version 0.9(beta)</span>
+        <h1 class="logo">NewArrow</h1>
+        <span class="version">version 0.1(Alpha)</span>
       </div>
 
       <nav class="directories">
         <span class="directories-title">//SAVED DIRECTORIES</span>
-        <ul>
-          <li><span class="icon">📖</span> Age of 80s</li>
-          <li><span class="icon">📖</span> Eletronical and jazz</li>
-          <li><span class="icon">📖</span> Classical songs</li>
-          <li><span class="icon">📖</span> Brazilians music</li>
-        </ul>
+        <ul></ul>
       </nav>
       <div class="sidebar-bottom">
         <button class="config-btn">Config.</button>
@@ -39,7 +34,6 @@
           <h2>Welcome Back! <span class="username">YourName!</span></h2>
           <p class="subtitle">Already to play!</p>
         </div>
-        <span class="temp">temp:32+</span>
       </header>
 
       <section class="content">
@@ -58,11 +52,7 @@
         <!-- CENTER LANE -->
         <div class="center-lane">
           <h3 class="lane-title">Center lane</h3>
-          <ul class="track-list">
-            <li><span class="track-number">1.</span> Another One bits the dust - Queen</li>
-            <li><span class="track-number">2.</span> The Lucky One - Laura Marling</li>
-            <li><span class="track-number">3.</span> Do you read me - Rory Gallagher</li>
-          </ul>
+          <ul class="track-list"></ul>
         </div>
 
       </section>
@@ -77,28 +67,34 @@
 
     <div class="player-bar-center">
       <div class="controls">
-        <button class="control-btn" id="prevBtn">⏮</button>
-        <button class="control-btn control-btn--play" id="playBtn">▶</button>
-        <button class="control-btn" id="nextBtn">⏭</button>
+          <button class="control-btn" id="prevBtn">
+            <img src="./src/buttons/beforehover.png" alt="prev">
+          </button>
+        
+        <button class="control-btn control-btn--play" id="playBtn">
+          <img src="./src/buttons/Button-play.png" alt="Play">
+        </button>
+        
+        <button class="control-btn" id="nextBtn">
+          <img src="./src/buttons/passhover.png" alt="Next">
+        </button>
       </div>
 
       <div class="progress-row">
-        <span class="time time--current">1:58</span>
+        <span class="time time--current"></span>
         <div class="progress-bar">
-          <div class="progress-bar-fill" style="width: 60%;"></div>
+          <div class="progress-bar-fill" style="width: 0%;"></div>
         </div>
-        <span class="time time--total">3:14</span>
+        <span class="time time--total"></span>
       </div>
     </div>
 
     <div class="player-bar-right">
-      <span class="icon icon--eq">〜</span>
+      <img src="src/icons/audio-waveform.png" id="audioWaveform" alt="Waveform"></img>
       <div class="volume-bar">
-        <div class="volume-bar-fill" style="width: 80%;"></div>
+        <div class="volume-bar-fill" style="width: 0%;"></div>
       </div>
     </div>
   </footer>
-
-  <script src="web-audio.js"></script>
 </body>
 </html>
