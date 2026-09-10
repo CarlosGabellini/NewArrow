@@ -73,6 +73,7 @@ func (a *App) ListarDiretorios() ([]string, error) {
 	Essa funcao retornar um handler http, ou seja, ela nao processa nada sozinha, ela fabrica algo
 	capaz de responder requisicoes. Eh tipo uma fabrica de atendentes que sabem responder pedidos
 	do tipo "Me de os arquivos de musica".
+----------------------------------------------------------------------------------------------
  */
 
 func NewMusicAssetHandler() http.Handler {

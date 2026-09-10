@@ -31,6 +31,7 @@ build/windows/
 # -------------------------
 frontend/node_modules/
 frontend/dist/
+frontend/src/fonts
 
 # -------------------------
 # IDE / Editors

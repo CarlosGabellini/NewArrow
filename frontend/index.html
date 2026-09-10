@@ -1,41 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>NewArrow</title>
-    <link rel="stylesheet" href="./src/Css-like/style-index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NewArrow</title>
+  <link rel="stylesheet" href="./src/Css-like/style-index.css">
 </head>
 <body>
-    <nav>
-        <div class="navegation">
-            <h1 class="navegation-bar-h1"><a href="./index.html">Center lane</a></h1>
-                
-            <!--Aqui colocamos os menus de navegacoes e como eles devem interagir com a pagina.-->
-                
-            <a class="folder-directory" href="./src/html-navegation/folders-menu.html">
-                <img class="img-manipulation" src="./src/icons/Pasta3.svg" alt="directories">
-            </a>
-            <h1 class="navegation-bar-h1"><a href="./src/html-navegation/downloads.html">Downloads</a></h1>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <h1 class="logo">⊙ NewArrow</h1>
+        <span class="version">version 0.9(beta)</span>
+      </div>
+
+      <nav class="directories">
+        <span class="directories-title">//SAVED DIRECTORIES</span>
+        <ul>
+          <li><span class="icon">📖</span> Age of 80s</li>
+          <li><span class="icon">📖</span> Eletronical and jazz</li>
+          <li><span class="icon">📖</span> Classical songs</li>
+          <li><span class="icon">📖</span> Brazilians music</li>
+        </ul>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="config-btn">Config.</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <header class="main-header">
+        <div>
+          <h2>Welcome Back! <span class="username">YourName!</span></h2>
+          <p class="subtitle">Already to play!</p>
         </div>
-    </nav>
-    <main class="app-layout">
-        <!--O painel de musica fica aqui a esquerda! colocar em grid -->
-        <section class="music-painel">
-            
-                <!-- Injetando as dependencias do hmtl aqui nessa linha-->
-        </section>
-        <aside class="album">
-            <div class="organization-album">
-                <div class="foto-album">dasdsa</div>
-            </div>
-            <div class="informacoes-musica">
-                <div class="barra-progresso">
-                    <div class="barra-progresso-preenchida"></div>
-                </div>
-            </div>
-        </aside>
+        <span class="temp">temp:32+</span>
+      </header>
+
+      <section class="content">
+
+        <!-- NOW PLAYING -->
+        <div class="now-playing">
+          <div class="cover">
+            <img src="cover-placeholder.jpg" alt="Album cover">
+          </div>
+          <h3 class="track-title"></h3>
+          <p class="track-artist"></p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- CENTER LANE -->
+        <div class="center-lane">
+          <h3 class="lane-title">Center lane</h3>
+          <ul class="track-list">
+            <li><span class="track-number">1.</span> Another One bits the dust - Queen</li>
+            <li><span class="track-number">2.</span> The Lucky One - Laura Marling</li>
+            <li><span class="track-number">3.</span> Do you read me - Rory Gallagher</li>
+          </ul>
+        </div>
+
+      </section>
     </main>
-    <script type="module" src="./src/JS/index-js.js"></script>
+  </div>
+
+  <!-- PLAYER BAR -->
+  <footer class="player-bar">
+    <div class="player-bar-left">
+      <button class="config-btn config-btn--footer">Config.</button>
+    </div>
+
+    <div class="player-bar-center">
+      <div class="controls">
+        <button class="control-btn" id="prevBtn">⏮</button>
+        <button class="control-btn control-btn--play" id="playBtn">▶</button>
+        <button class="control-btn" id="nextBtn">⏭</button>
+      </div>
+
+      <div class="progress-row">
+        <span class="time time--current">1:58</span>
+        <div class="progress-bar">
+          <div class="progress-bar-fill" style="width: 60%;"></div>
+        </div>
+        <span class="time time--total">3:14</span>
+      </div>
+    </div>
+
+    <div class="player-bar-right">
+      <span class="icon icon--eq">〜</span>
+      <div class="volume-bar">
+        <div class="volume-bar-fill" style="width: 80%;"></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="web-audio.js"></script>
 </body>
 </html>

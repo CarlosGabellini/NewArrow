@@ -1,143 +1,384 @@
-@import url('https://fonts.googleapis.com/css2?family=Skranji:wght@400;700&display=swap');
-
-/*Caracteristicas e definicoes basicas do tema.*/
-
 :root {
-    --cor-de-fundo: #282828;
-    --cor-de-texto:  #fbf1c7;
-    --cor-da-caixa-nav: #8ec07c;
-    --cor-do-progresso: #fe8019;
-    --transicao: all 0.3s linear;
-    --cor-transicao-forma:  rgba(69, 85, 136, 0.5);
-    --borda-circular: 16px;
+  /* Paleta: coolors.co/palette/463f3a-8a817c-bcb8b1-f4f3ee-e0afa0 */
+  --color-dark: #463f3a;
+  --color-gray: #8a817c;
+  --color-light-gray: #bcb8b1;
+  --color-bg: #f4f3ee;
+  --color-accent: #e0afa0;
+
+  --bg-primary: var(--color-bg);
+  --bg-sidebar: var(--color-gray);
+  --bg-footer: var(--color-dark);
+
+  --text-primary: var(--color-dark);
+  --text-on-dark: var(--color-bg);
+  --text-muted: var(--color-light-gray);
+  --text-accent: var(--color-accent);
+
+  --sidebar-width: 280px;
+  --footer-height: 90px;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+
+  font-size: 16px;
 }
 
-* {
-    box-sizing: border-box;
-    font-family: "Skranji", system-ui;
+@font-face {
+    font-family: "Iosevka";
+    src: url('../fonts/IosevkaNerdFont-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    background: var(--cor-de-fundo);
-    color: var(--cor-de-texto);
+  font-family: "Iosevka";
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  height: 100vh;
+  overflow: hidden;
 }
 
-/*Remove the links in a*/
-
-a {
-    text-decoration: none;
-    color: inherit;
+.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  height: calc(100vh - var(--footer-height));
 }
 
-.img-manipulation {
-    width: 72px;
-    height: 64px;
-    margin: 0.5rem;
-    border-radius: var(--borda-circular);
-    border: 2px solid var(--cor-da-caixa-nav);
-    transition: var(--transicao);
+/* ---------- SIDEBAR ---------- */
+.sidebar {
+  background-color: var(--bg-sidebar);
+  color: var(--text-on-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem 1.5rem;
 }
 
-.img-manipulation:hover {
-    background: var(--cor-transicao-forma);
+.sidebar-top .logo {
+  font-size: 1.4rem;
+  font-weight: normal;
+  letter-spacing: 1px;
 }
 
-.navegation {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    padding-left: 1rem;
-    border-radius: var(--borda-circular);
-    border: 2px solid var(--cor-da-caixa-nav);
-    gap: 1rem;
+.sidebar-top .version {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  opacity: 0.85;
 }
 
-.navegation-bar-h1 {
-    font-size: 1.5rem;
-    border: 2px solid var(--cor-da-caixa-nav);
-    min-width: 15%;
-    border-radius: var(--borda-circular);
-    transition: var(--transicao);
-    text-align: center;
-    align-items: center;
-    max-height: 7vh;
+.directories {
+  margin-top: 3rem;
 }
 
-.navegation-bar-h1:hover {
-    background-color: var(--cor-transicao-forma);
+.directories-title {
+  display: block;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  margin-bottom: 1.2rem;
 }
 
-.app-layout {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    height: 85vh;
-    border: 1px solid var(--cor-da-caixa-nav);
-    margin-top: 1rem;
-    border-radius: var(--borda-circular);
+.directories ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.music-painel {
-    border: 1px solid var(--cor-da-caixa-nav);
-    border-radius: var(--borda-circular);
-    overflow-y: auto;           /*Faz com que os elementos criados fiquem dentro deste container*/
+.directories li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  cursor: pointer;
 }
 
-.music-painel::-webkit-scrollbar {
-    display: none; /*Esconde a barra de rolagem*/
+.directories li:hover {
+  color: var(--text-accent);
 }
 
-.faixa-de-musica {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 0.5rem;
-    font-size: 1.50rem;
-    padding-right: 1.5rem;
-    padding-left: 1rem;
+.icon {
+  flex-shrink: 0;
 }
 
-.faixa-de-musica:hover {
-    background-color: var(--cor-de-texto);
-    color: var(--cor-da-caixa-nav);
-    transition: var(--transicao);
+.sidebar-bottom {
+  display: none; /* botão Config. aparece na player-bar; remova se quiser aqui também */
 }
 
-.album {
-    margin-top: 1rem;
+/* ---------- MAIN ---------- */
+.main {
+  padding: 2.5rem 3rem;
+  overflow-y: auto;
 }
 
-.organization-album {
-    display: flex;
-    justify-content: center;
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
 }
 
-.foto-album {
-    background-color: white;
+.main-header h2 {
+  font-size: 1.6rem;
+  font-weight: normal;
 }
 
-.informacoes-musica {
-    display: flex;
-    margin: 1rem auto;
-    flex-direction: row;
-    height: 10%;
-    max-width: 80%;
+.username {
+  color: var(--text-primary);
 }
 
-.barra-progresso {
-    width: 100%;
-    height: 20%;
-    border: 1px solid var(--cor-da-caixa-nav);
-    border-radius: 2px;
-    position: relative;
+.subtitle {
+  margin-top: 0.4rem;
+  color: var(--color-gray);
+  font-size: 0.95rem;
 }
 
-/*Queimei uns neuronios tentando fazer essa barra de progresso, espero que agora va!*/
+.temp {
+  font-size: 0.9rem;
+  color: var(--color-gray);
+}
 
-.barra-progresso-preenchida {
-    height: 100%;
-    width: 0%;
-    background-color: var(--cor-do-progresso);
-    position: absolute;
+.content {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 2.5rem;
+}
+
+/* ---------- NOW PLAYING ---------- */
+.now-playing {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cover {
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background-color: var(--color-light-gray);
+  margin-bottom: 1.5rem;
+}
+
+.cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.track-title {
+  font-size: 2.2rem;
+  font-weight: normal;
+  line-height: 1.2;
+}
+
+.track-artist {
+  font-size: 1.2rem;
+  color: var(--text-accent);
+}
+
+/* ---------- DIVIDER ---------- */
+.divider {
+  width: 1px;
+  background-color: var(--color-light-gray);
+}
+
+/* ---------- CENTER LANE ---------- */
+.center-lane {
+  padding-top: 0.3rem;
+}
+
+.lane-title {
+  display: inline-block;
+  background-color: var(--color-dark);
+  color: var(--text-on-dark);
+  font-weight: normal;
+  font-size: 1.4rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.8rem;
+}
+
+.track-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.track-list li {
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--color-light-gray);
+  font-size: 1.05rem;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-list li:hover {
+  color: var(--text-accent);
+}
+
+.track-number {
+  display: inline-block;
+  width: 1.6rem;
+}
+
+/* ---------- PLAYER BAR (rodapé fixo) ---------- */
+.player-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--footer-height);
+  background-color: var(--bg-footer);
+  color: var(--text-on-dark);
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr auto;
+  align-items: center;
+  padding: 0 2rem;
+  gap: 2rem;
+}
+
+.player-bar-left {
+  background-color: var(--bg-primary);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: calc(-2rem);
+  padding-left: 2rem;
+  width: var(--sidebar-width);
+}
+
+.config-btn {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.config-btn--footer {
+  color: var(--text-primary);
+}
+
+.player-bar-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.control-btn {
+  background: none;
+  border: none;
+  color: var(--text-on-dark);
+  font-size: 1.3rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.control-btn--play {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  border: 2px solid var(--text-accent);
+  color: var(--text-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.time {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  min-width: 2.4rem;
+}
+
+.time--current { text-align: right; }
+.time--total { text-align: left; }
+
+.progress-bar {
+  flex: 1;
+  height: 4px;
+  background-color: var(--color-gray);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--text-accent);
+}
+
+.player-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.icon--eq {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+}
+
+.volume-bar {
+  width: 140px;
+  height: 4px;
+  background-color: var(--color-gray);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.volume-bar-fill {
+  height: 100%;
+  background-color: var(--text-accent);
+}
+
+/* ---------- RESPONSIVO ---------- */
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    display: none;
+  }
+  .content {
+    grid-template-columns: 1fr;
+  }
+  .divider {
+    display: none;
+  }
+  .player-bar {
+    grid-template-columns: 1fr;
+  }
+  .player-bar-left {
+    display: none;
+  }
 }
