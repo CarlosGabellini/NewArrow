@@ -1,19 +1,46 @@
-# README
+# NewArrow
 
-## About
+## In portuguese
 
-This is the official Wails Vanilla template.
+NewArrow eh um player de musica offline simples construido a partir do Go + JS, onde usamos
+o framework Wails para construi-lo, ele eh feito para proporcionar conforto e facilidade de
+uso.
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+## Arquitetura
 
-## Live Development
+O JS cuida do player e dos estados que ele faz, enquanto o go eh responsavel pela organizacao
+de diretorios, o arquivo JSON em que eh armazenado as musicas, e responsavel pelo binario em-
+pacotado.
+A arvore do projeto pode ser vista abaixo:
+```bash
+.
+├── app.go
+├── build
+│   ├── appicon.png
+│   ├── bin
+│   ├── darwin
+│   ├── README.md
+│   └── windows
+├── frontend
+│   ├── dist
+│   ├── index.html
+│   ├── links-para-guardar.txt
+│   ├── node_modules
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── package.json.md5
+│   ├── src
+│   ├── vite.config.js
+│   └── wailsjs
+├── go.mod
+├── go.sum
+├── interno
+│   ├── cacheuser
+│   └── dir1org
+├── main.go
+├── myJSONfile.json
+├── README.md
+└── wails.json
+```
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
-
-## Building
-
-To build a redistributable, production mode package, use `wails build`.
+Ela esta assim __neste recente momento__.
