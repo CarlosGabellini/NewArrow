@@ -19,7 +19,9 @@
 
       <nav class="directories">
         <span class="directories-title">//SAVED DIRECTORIES</span>
-        <ul></ul>
+
+        <!-- Injetando as dependecias do CSS aqui, onde vou colocar os diretorios!-->
+        <ul class="directories-list"></ul>
       </nav>
       <div class="sidebar-bottom">
         <button class="config-btn">Config.</button>
@@ -31,7 +33,7 @@
 
       <header class="main-header">
         <div>
-          <h2>Welcome Back! <span class="username">YourName!</span></h2>
+          <h2>Welcome, <span class="username">Host!</span></h2>
           <p class="subtitle">Already to play!</p>
         </div>
       </header>
@@ -52,6 +54,8 @@
         <!-- CENTER LANE -->
         <div class="center-lane">
           <h3 class="lane-title">Center lane</h3>
+
+          <!-- As musicas vao ser injetadas aqui-->
           <ul class="track-list"></ul>
         </div>
 
@@ -83,7 +87,7 @@
       <div class="progress-row">
         <span class="time time--current"></span>
         <div class="progress-bar">
-          <div class="progress-bar-fill" style="width: 0%;"></div>
+          <div class="progress-bar-fill"></div>
         </div>
         <span class="time time--total"></span>
       </div>
@@ -96,5 +100,7 @@
       </div>
     </div>
   </footer>
+  
+  <script type="module" src="./src/JS/index-js.js"></script>
 </body>
 </html>

@@ -97,7 +97,7 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 0.6rem;
-  font-size: 0.95rem;
+  font-size: 1.25rem;
   cursor: pointer;
 }
 
@@ -123,7 +123,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
 }
 
 .main-header h2 {
@@ -178,7 +178,7 @@ body {
 }
 
 .track-artist {
-  font-size: 1.2rem;
+  font-size: 1.75rem;
   color: var(--text-accent);
 }
 
@@ -189,8 +189,11 @@ body {
 }
 
 /* ---------- CENTER LANE ---------- */
+
 .center-lane {
-  padding-top: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .lane-title {
@@ -202,29 +205,41 @@ body {
   padding: 0.9rem 1rem;
   border-radius: var(--radius-sm);
   margin-bottom: 1.8rem;
+  max-width: 15vw;
 }
 
 .track-list {
   list-style: none;
   display: flex;
   flex-direction: column;
+  height: 50vh;
+  overflow-y: auto;
 }
 
 .track-list li {
-  padding: 0.9rem 0;
+  padding: 2.5rem 0;
   border-bottom: 1px solid var(--color-light-gray);
-  font-size: 1.05rem;
+  font-size: 1.25rem;
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+.track-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.track-list::-webkit-scrollbar-thumb {
+  background-color: var(--color-light-gray);
+  border-radius: 2px;
+}
+
 .track-list li:hover {
   color: var(--text-accent);
 }
 
-.track-number {
+.trackNumber {
   display: inline-block;
   width: 1.6rem;
 }
@@ -340,6 +355,7 @@ body {
 
 .progress-bar-fill {
   height: 100%;
+  width: 0%;
   background-color: var(--text-accent);
 }
 

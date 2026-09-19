@@ -87,7 +87,7 @@ func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 	chave_validacao := make(map[string]ListaMusicas)
 	caminhos_vistos := make(map[string]bool)		//Levando em consideracao musicas apagadas;
 
-	if f, err := os.Open("NewArrow/myJSONfile.json"); err == nil {
+	if f, err := os.Create("NewArrow/myJSONfile.json"); err == nil {
     	json.NewDecoder(f).Decode(&chave_validacao)
      	f.Close()
 	}
@@ -164,6 +164,7 @@ func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 		_lista_de_musicas = append(_lista_de_musicas, musicas)
 	}
 
+	//Deletando os arquivos que nao existem mais, caso o usuario venha a apagar.
 	for path := range chave_validacao {
 		if !caminhos_vistos[path] {
 			delete(chave_validacao, path)
@@ -215,10 +216,8 @@ ________________________________________________________________________________
 func ColocarMetadados(WayPath string) (ListaMusicas, error) {
 
 	f, err := os.Open(WayPath)
-	
 	var _saidasMetadados ListaMusicas
 
-	
 	if err != nil {
 		return _saidasMetadados, err
 	}
