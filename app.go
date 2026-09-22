@@ -1,6 +1,7 @@
 package main
 
 import (
+	"NewArrow/interno/cacheuser"
 	"NewArrow/interno/dir1org"
 	"context"
 	"fmt"
@@ -25,7 +26,7 @@ func NewApp() *App {
 //o JavaScript.
 
 func (a *App) RetornandoLista() ([]dir1org.ListaMusicas, error) {
-	var CaminhoJSON string = "./myJSONfile.json"
+	var CaminhoJSON string = cacheuser.WayJSON_file()
 	lista, err := dir1org.EscanearJSON(CaminhoJSON)
 
 	if err != nil {
@@ -57,7 +58,7 @@ func (a *App) ListarDiretorios() ([]string, error) {
 	caminhoHOME, err := dir1org.EncontreHome()
 
 	if err != nil {
-		return nil, err
+		return []string{}, err
 	}
 	
 	diretoriosEncontrados, err := dir1org.VerOsdiretorios_musics(caminhoHOME)

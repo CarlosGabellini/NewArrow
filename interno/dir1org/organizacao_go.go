@@ -1,6 +1,7 @@
 package dir1org
 
 import (
+	"NewArrow/interno/cacheuser"
 	"encoding/json"
 	"os"
 	"path/filepath"
@@ -87,7 +88,7 @@ func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 	chave_validacao := make(map[string]ListaMusicas)
 	caminhos_vistos := make(map[string]bool)		//Levando em consideracao musicas apagadas;
 
-	if f, err := os.Create("NewArrow/myJSONfile.json"); err == nil {
+	if f, err := os.Create(cacheuser.WayJSON_file()); err == nil {
     	json.NewDecoder(f).Decode(&chave_validacao)
      	f.Close()
 	}
@@ -160,6 +161,7 @@ func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 		close(_saida_pasta)
 	}()
 
+	//Basicamente musicas esta copiando os elementos do canal _saidas_pastas, canais nao tem indice;
 	for musicas := range _saida_pasta {
 		_lista_de_musicas = append(_lista_de_musicas, musicas)
 	}
@@ -175,7 +177,7 @@ func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 		chave_validacao[musica.Caminho_path] = musica
 	}
 
-	saida, err := os.Create("./myJSONfile.json")
+	saida, err := os.Create(cacheuser.WayJSON_file())
 	
 	if err != nil {
     	return _lista_de_musicas, err
@@ -243,6 +245,14 @@ func ColocarMetadados(WayPath string) (ListaMusicas, error) {
 	_saidasMetadados.Caminho_path = WayPath;
 	_saidasMetadados.ModTime = informacoes.ModTime().Unix()
 	_saidasMetadados.Size = informacoes.Size()
+
+	dir, _ := filepath.Split(WayPath)
+	onlyDir := filepath.Base(dir)
+
+	//Aqui estamos pegando somente o nome dos diretorios, por que vou prescisar somente do nome
+	//depois para escanear para o frontEnd.
+
+	_saidasMetadados.Diretorio = onlyDir
 
 	return _saidasMetadados, nil
 }

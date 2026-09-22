@@ -68,7 +68,7 @@ func CrieSubdiretorios(pastaPai, pastaFilho string) string {
 //Pasta aonde vao ficar as musicas do usuario;
 func CriandoA_pastaJSON() string {
 	CaminhoCache, err := CriandoMeuDiretorioCache()
-	const meuJSON string = "MeuJSON"
+	const meuJSON string = "MyJSON"
 
 	if err != nil {
 		return fmt.Sprintln(err)

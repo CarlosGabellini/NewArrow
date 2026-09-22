@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 )
 
+//Struct principal para escaneamento de dados.
 type ListaMusicas struct {
 	Nome_album string `json:"nome_album"`
 	Nome_da_musica string `json:"nome_musica"`
@@ -13,8 +14,10 @@ type ListaMusicas struct {
 	Caminho_path string `json:"caminho_path"`
 	ModTime int64 `json:"ModTime"`
 	Size int64 `json:"Size"`
+	Diretorio string `json:"diretorio"`
 }
 
+//Funcao redundante para encontrar a home, provavelmente vou excluir ela alguma hora;
 func EncontreHome() (string, error) {
 	diretorioHome, err := os.UserHomeDir()
 
@@ -22,7 +25,7 @@ func EncontreHome() (string, error) {
 		return "", nil
 	}
 	
-	return filepath.Join(diretorioHome, "Music"), nil
+	return diretorioHome, err
 }
 
 /*-----------------------------------------Sobre VerOSdiretorios_musics-----------------------------------
@@ -34,18 +37,22 @@ func EncontreHome() (string, error) {
  */
 
 func VerOsdiretorios_musics(home string) ([]string, error) {
-	diretorios, err := os.ReadDir(home)
-	if err != nil {
-		return nil, err
-	}
+	WayMusics := filepath.Join(home, "Music")
+	var MeusDiretorios []string
 
-	var diretoriosMusicas []string
+	//Entrando no filepath para escanear o nome dos diretorios;
+	err := filepath.WalkDir(WayMusics, func(path string, d os.DirEntry, err error) error {
 
-	for _, diretorio := range diretorios {
-		if diretorio.IsDir() {
-			diretoriosMusicas = append(diretoriosMusicas, diretorio.Name())
+		if err != nil {
+			return err
 		}
-	}
 
-	return diretoriosMusicas, nil
+		if d.IsDir() && path != WayMusics {
+			MeusDiretorios = append(MeusDiretorios, path)
+		}
+
+		return nil
+	})
+
+	return MeusDiretorios, err
 }
