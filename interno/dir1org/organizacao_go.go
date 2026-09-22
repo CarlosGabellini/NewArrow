@@ -3,6 +3,7 @@ package dir1org
 import (
 	"NewArrow/interno/cacheuser"
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"sort"
@@ -44,6 +45,8 @@ const (
 func EscanearJSON(arquivo string) ([]ListaMusicas, error) {
 	//Aqui vou escanear o JSON.
 	var _lista_de_musicas []ListaMusicas
+
+	fmt.Println("Rodando escanear JSON")
 
 	f, err := os.Open(arquivo)
 	if err != nil {
@@ -88,13 +91,14 @@ func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 	chave_validacao := make(map[string]ListaMusicas)
 	caminhos_vistos := make(map[string]bool)		//Levando em consideracao musicas apagadas;
 
-	if f, err := os.Create(cacheuser.WayJSON_file()); err == nil {
+	fmt.Println("Rodando liste a pasta")
+	
+	if f, err := os.Open(cacheuser.WayJSON_file()); err == nil {
     	json.NewDecoder(f).Decode(&chave_validacao)
      	f.Close()
 	}
 
 	//Se o JSON eh nil, o chave validacao vai interromper o fluxo e cagar o programa;
-	
 	if chave_validacao == nil {
     	chave_validacao = make(map[string]ListaMusicas)
 	}
@@ -177,17 +181,25 @@ func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 		chave_validacao[musica.Caminho_path] = musica
 	}
 
+	fmt.Println("Ate aqui ok!")
 	saida, err := os.Create(cacheuser.WayJSON_file())
 	
 	if err != nil {
+		fmt.Println(err)
     	return _lista_de_musicas, err
 	}
 
 	defer saida.Close()
 
-	if err := json.NewEncoder(saida).Encode(chave_validacao); err != nil {
-    	return _lista_de_musicas, err
+	enconder1 := json.NewEncoder(saida)
+	enconder1.SetIndent("", "  ")
+
+	if err := enconder1.Encode(chave_validacao); err != nil {
+		fmt.Println(err)
+		return _lista_de_musicas, err
 	}
+
+	fmt.Println("Encerrado!")
 
 	return _lista_de_musicas, nil
 }

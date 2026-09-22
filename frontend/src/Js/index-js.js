@@ -1,16 +1,14 @@
 //Implementando o JS nessa pagina aqui!
 
 import { Player } from "./web-audio.js";
-import { RetornandoLista } from "../../wailsjs/go/main/App.js";
+import { AtualizarCache, RetornandoLista } from "../../wailsjs/go/main/App.js";
 import { ListarDiretorios } from "../../wailsjs/go/main/App.js";
 
 //Atribuindo uma variavel a classe do audio que eu mesmo criei;
 const MeuPlayer = new Player;
 
-//Retornando a lista de musica;
-const _My_list = await RetornandoLista();
-
 //Os query Selector aqui embaixo;
+const scan_button = document.querySelector(".scan-button")
 const meus_diretorios = document.querySelector(".directories-list");
 const A1_lista_de_diretorios = await ListarDiretorios();
 const minha_track_list = document.querySelector(".track-list");
@@ -20,10 +18,46 @@ const pausar_retomar = document.getElementById("playBtn");
 let barra_progresso = document.querySelector(".progress-bar-fill");
 let barra_sem_preencher = document.querySelector(".progress-bar");
 
+/*---------------------------------Async Functions ------------------------------------------
+  Aqui colocar a funcao de listar a pasta do golang, para ver se eu consegui criar o arquivo
+JSON no cache do usuario, isso vai servir depois na hora de empacotar o binario;
+
+---------------------------------------------------------------------------------------------
+*/
+
+async function InjetarJSON() {
+  try {
+    await AtualizarCache();
+
+  } catch (error) {
+    console.log("error: ", error)
+  } 
+}
+
+scan_button.addEventListener("click", () => {
+  let myMusics = InjetarJSON();
+  console.log(myMusics)
+})
+
+//Retornando a lista de musica;
+let _My_list = []
+
+//Sempre use try e catch, se nao usar, pode recusar e quebra o codigo todo!
+//(Experiencia propria!)
+
+try {
+  _My_list = await RetornandoLista();
+  
+} catch (error) {
+  console.log("Ainda não há cache, ou erro ao ler:", error);
+}
+
 //Injetando os diretorios que vou colocar depois;
 
 if (A1_lista_de_diretorios.length < 7) {
+  
   for (let i = 0; i < A1_lista_de_diretorios.length; i++) {
+    
       const li = document.createElement("li");
       li.textContent = A1_lista_de_diretorios[i];
       meus_diretorios.appendChild(li);

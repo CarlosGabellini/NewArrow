@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 )
@@ -37,13 +38,17 @@ func (a *App) RetornandoLista() ([]dir1org.ListaMusicas, error) {
 }
 
 func (a *App) AtualizarCache() (string, error) {
-	diretorioHome, err := dir1org.EncontreHome()
+	diretorioHome, err := os.UserHomeDir()
 
 	if err != nil {
 		return "", err
 	}
 
-	lista2, err := dir1org.Liste_a_pasta(diretorioHome)
+	fmt.Println("Rodando atualizar cache!")
+
+	diretorioMusics := filepath.Join(diretorioHome, "Music")
+	lista2, err := dir1org.Liste_a_pasta(diretorioMusics)
+	
 	if err != nil {
 		return "", err
 	}

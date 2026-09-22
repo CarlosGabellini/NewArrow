@@ -8,6 +8,7 @@ export namespace dir1org {
 	    caminho_path: string;
 	    ModTime: number;
 	    Size: number;
+	    diretorio: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new ListaMusicas(source);
@@ -22,6 +23,7 @@ export namespace dir1org {
 	        this.caminho_path = source["caminho_path"];
 	        this.ModTime = source["ModTime"];
 	        this.Size = source["Size"];
+	        this.diretorio = source["diretorio"];
 	    }
 	}
 

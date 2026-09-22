@@ -8,28 +8,21 @@ import (
 
 func OrganizandoCache(setName string) (string, error) {
 	MeuCache, err := os.UserCacheDir()
-
+	
 	if err != nil {
 		return "", err
 	}
 
 	MeuPerfilCache := filepath.Join(MeuCache, setName)
 
-	//Aqui estou criando a pasta a partir de onde esta o cache do usuario.
-	// No Windows isso fica em AppData/
 	err = os.Mkdir(MeuPerfilCache, 0755)
 
-	if err != nil {
-
-		if os.IsExist(err) {
-			return MeuPerfilCache, err
-		}
-
+	if err != nil && !os.IsExist(err) {
 		return "", err
 	}
 
-	//Aqui fazendo os tratamentos de erros de forma adequada para o arquivo.
-	return MeuPerfilCache, err
+	// Se chegou aqui, ou criou com sucesso, ou já existia — ambos são OK.
+	return MeuPerfilCache, nil
 }
 
 func CriandoMeuDiretorioCache() (string, error) {
@@ -71,7 +64,7 @@ func CriandoA_pastaJSON() string {
 	const meuJSON string = "MyJSON"
 
 	if err != nil {
-		return fmt.Sprintln(err)
+		return ""
 	}
 
 	DiretorioJSON := CrieSubdiretorios(CaminhoCache, meuJSON)
