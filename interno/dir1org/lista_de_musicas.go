@@ -54,5 +54,12 @@ func VerOsdiretorios_musics(home string) ([]string, error) {
 		return nil
 	})
 
+	//Aqui eh somente para ficar o nome do diretorio, e nao o caminho completo! para ficar melhor pro
+	// FrontEnd.
+	for i := 0; i < len(MeusDiretorios); i++ {
+		_, NomeDir := filepath.Split(MeusDiretorios[i])
+		MeusDiretorios[i] = NomeDir
+	}
+
 	return MeusDiretorios, err
 }
