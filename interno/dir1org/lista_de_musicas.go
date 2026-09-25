@@ -23,8 +23,8 @@ type ListaMusicas struct {
 
 //Cria a lista de struct para o JS sobre onde fica o caminho correto das fotos de albuns;
 type AlbunsFoto struct {
-	Caminho string
-	Album string
+	Caminho string `json:"caminho"`
+	Diretorio string `json:"diretorio"`
 }
 
 //Funcao redundante para encontrar a home, provavelmente vou excluir ela alguma hora;
@@ -66,6 +66,10 @@ func VerOsdiretorios_musics(home string) ([]string, error) {
 		return nil
 	})
 
+	if err != nil {
+		return []string{}, err
+	}
+
 	//Aqui eh somente para ficar o nome do diretorio, e nao o caminho completo! para ficar melhor pro
 	// FrontEnd.
 	for i := 0; i < len(MeusDiretorios); i++ {
@@ -90,13 +94,15 @@ a partir do caminho que a gente fez.
  */
 
 //Escaneia e cria os diretorios com as fotos dos albuns para usar depois;
-func EscanearFotosAlbum() {
+func EscanearFotosAlbum() ([]AlbunsFoto, error){
 
 	MinhaHome, err1 := os.UserHomeDir()
 	CaminhoDasPastas := make([]string, 0, 10)	//Nome dos diretorios de mesmo nome na pasta userCache()
+	MeusAlbunsFotos := make([]AlbunsFoto, 0, 100)
 	
 	if err1 != nil {
 		fmt.Println(err1)
+		return []AlbunsFoto{}, err1
 	}
 	
 	MeusDiretorios, err := VerOsdiretorios_musics(MinhaHome)
@@ -104,21 +110,30 @@ func EscanearFotosAlbum() {
 
 	if err != nil {
 		fmt.Println(err)
+		return []AlbunsFoto{}, err1
 	}
 
 	if err2 != nil {
 		fmt.Println(err2)
+		return []AlbunsFoto{}, err1
 	}
 
 	for indice := range MeusDiretorios {
 		CaminhoDasPastas = append(CaminhoDasPastas, cacheuser.PastaAlbumDir(MeusDiretorios[indice]))
 
 		if CaminhoDasPastas[indice] == "" {
-			fmt.Println("Criacao da pasta deu errado!")
-			break
+			fmt.Println("Criacao das pastas deu erro!")
+			return []AlbunsFoto{}, nil				//Tomar cuidado com esse nil, alterar ele depois!
 		}
 	}
 
+	/*------------------------------------ Coracao da logica ------------------------------------------
+		Aqui esta o coracao da logica, se uma musica estiver faltando, provavelmente vai ser por causa do
+	err != nil com o continue logo abaixo, por enquanto nao me interesso em fazer o tratamento de erro
+	adequado, mas tem que ficar esperto para corrigir isso daqui caso va dar problema, por que somente 
+	estou fazendo um continue e pulando a musica que deveria ser analisada.
+	---------------------------------------------------------------------------------------------------
+	 */
 	for _, Musics := range MinhasMusicas {
 
 		f, err := os.Open(Musics.Caminho_path)
@@ -154,6 +169,8 @@ func EscanearFotosAlbum() {
 
 		for indice2 := range CaminhoDasPastas {
 
+			var CaminhoFotos AlbunsFoto
+
 			//Extrai somente o nome da pasta no cache, ela deve ser exatamente igual ao Musics.Diretorio, 
 			//para colocar no lugar corretamente;
 			_, Comparacao := filepath.Split(CaminhoDasPastas[indice2])
@@ -163,6 +180,9 @@ func EscanearFotosAlbum() {
 				//Criando o nome do arquivo aqui!
 				extensaoArquivo := Musics.Nome_da_musica + "." + ext
 				CaminhoCapa := filepath.Join(CaminhoDasPastas[indice2], extensaoArquivo)
+				
+				CaminhoFotos.Caminho = CaminhoCapa
+				CaminhoFotos.Diretorio = Comparacao
 
 				if _, err := os.Stat(CaminhoCapa); err == nil {
 					continue	//Capa ja existe, pule
@@ -171,8 +191,40 @@ func EscanearFotosAlbum() {
 				if err := os.WriteFile(CaminhoCapa, pintura.Data, 0644); err != nil {
 					fmt.Println(err)
 					continue
+					
+				} else {
+					MeusAlbunsFotos = append(MeusAlbunsFotos, CaminhoFotos)
 				}
 			}
 		}
 	}
+
+	return MeusAlbunsFotos, nil
+}
+
+func EscrevaNoJSON_Albuns(MeusAlbuns []AlbunsFoto) error {
+
+	MeuJSON := cacheuser.CaminhoJSON_photos()
+	Escaneando := make(map[string]AlbunsFoto)
+
+	if MeuJSON == "" {
+		errorf_ := fmt.Errorf("Nao foi possivel criar o arquivo JSON.")
+		return errorf_
+	}
+
+	Arq1, err := os.OpenFile(MeuJSON, os.O_RDWR | os.O_CREATE, 0644)
+
+	if err != nil &&  {
+		return err
+	}
+
+	defer Arq1.Close()
+
+	OsAlbuns, err1 := EscanearFotosAlbum()
+
+	if err1 != nil {
+		return err1
+	}
+
+	return nil
 }

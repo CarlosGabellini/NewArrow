@@ -15,3 +15,16 @@ func WayJSON_file() string {
 
 	return CaminhoJSON
 }
+
+func CaminhoJSON_photos() string {
+	pastaJSON := CriandoA_pastaJSON()
+	var nomeFile string = "caminho_jsonfotos.json"
+
+	if pastaJSON == "" {
+		return ""
+	}
+
+	JSON_fotos := filepath.Join(pastaJSON, nomeFile)
+
+	return JSON_fotos
+}

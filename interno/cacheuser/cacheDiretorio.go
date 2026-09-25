@@ -1,7 +1,6 @@
 package cacheuser
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 )
