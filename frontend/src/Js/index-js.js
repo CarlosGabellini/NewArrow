@@ -54,7 +54,7 @@ try {
 
 //Injetando os diretorios que vou colocar depois;
 
-if (A1_lista_de_diretorios.length < 7) {
+if (A1_lista_de_diretorios.length < 5) {
   
   for (let i = 0; i < A1_lista_de_diretorios.length; i++) {
     

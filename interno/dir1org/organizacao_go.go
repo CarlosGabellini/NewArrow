@@ -18,6 +18,15 @@ const (
 	WorkersOnline = int(8)
 )
 
+/*-------------------------------------------- Avisos para mim mesmo -------------------------------------
+	1. Sempre usar o fmt para debuggar o codigo caso encontre algum bug bizarro.
+	2. Faca o tratamento de erros de forma correta no arquivo.
+	3. Entenda o que cada funcao faca, nao tudo de uma vez, mas enxergue o proposito dela.
+	4. Deixe o codigo bem comentado, nao coloque coments se a funcao for autoexplicativa!
+
+	------------------------------------------------------------------------------------------------------
+ */
+
 /*-----------------------------------Biblioteca de escaneamento de diretorio------------------------------//
 
 	Basicamente essa biblioteca aqui serve para criar funcoes para escanear em um JSON e ser consumida pelo
@@ -42,12 +51,11 @@ const (
 	_____________________________________________________________________________________________________________
  */
 
+//Funcao que escaneia o JSON e devolve um array List com todos os dados de musicas;
 func EscanearJSON(arquivo string) ([]ListaMusicas, error) {
 	//Aqui vou escanear o JSON.
 	var _lista_de_musicas []ListaMusicas
-
-	fmt.Println("Rodando escanear JSON")
-
+	
 	f, err := os.Open(arquivo)
 	if err != nil {
 		return _lista_de_musicas, err
@@ -84,14 +92,13 @@ func EscanearJSON(arquivo string) ([]ListaMusicas, error) {
 	return  _lista_de_musicas, nil
 }
 
+//Atualiza o arquivo JSON das musicas, prescisa usar o botao scan no frontEnd para ela ser ativada.
 func Liste_a_pasta(diretorio string) ([]ListaMusicas, error) {
 
 	//Validacao do JSON para ver se ele nao esta corrompido;
 	var _lista_de_musicas []ListaMusicas
 	chave_validacao := make(map[string]ListaMusicas)
 	caminhos_vistos := make(map[string]bool)		//Levando em consideracao musicas apagadas;
-
-	fmt.Println("Rodando liste a pasta")
 	
 	if f, err := os.Open(cacheuser.WayJSON_file()); err == nil {
     	json.NewDecoder(f).Decode(&chave_validacao)
